@@ -1,7 +1,5 @@
 const app = document.querySelector(`.app`);
-const mainApp = app.querySelector(`.main`);
 const templates = document.querySelector(`#templates`).content;
-const mainScreen = templates.querySelector(`.main`);
 const screenWelcome = templates.querySelector(`.main--welcome`);
 const screenLevelGenre = templates.querySelector(`.main--level-genre`);
 const screenLevelArtist = templates.querySelector(`.main--level-artist`);
@@ -9,7 +7,7 @@ const screenResult = templates.querySelector(`.main--result`);
 const screensSequence = [screenWelcome, screenLevelGenre, screenLevelArtist, screenResult];
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
-const screensArray = [];
+
 let currentSequence = 0;
 let currentScreen;
 
