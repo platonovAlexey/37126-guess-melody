@@ -1,5 +1,5 @@
 import renderScreen from '../helpers/show';
-import getElementFromTemplate from '../helpers/getElementFromTemplate';
+import getElementFromTemplate from '../helpers/get-element-from-template';
 import screenLevelArtist from './screen-level-artist';
 
 
@@ -17,11 +17,9 @@ const template = `<section class="main main--welcome">
 const screenWelcome = getElementFromTemplate(template);
 const playButton = screenWelcome.querySelector(`.main-play`);
 
-const onClickPlayButton = function () {
+playButton.addEventListener(`click`, () => {
   renderScreen(screenLevelArtist);
-};
-
-playButton.addEventListener(`click`, onClickPlayButton);
+});
 
 export default screenWelcome;
 

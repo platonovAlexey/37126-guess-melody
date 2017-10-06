@@ -1,4 +1,4 @@
-import getElementFromTemplate from '../helpers/getElementFromTemplate';
+import getElementFromTemplate from '../helpers/get-element-from-template';
 import renderScreen from '../helpers/show';
 import screenWelcome from './screen-welcom';
 
@@ -12,13 +12,11 @@ const template = `<section class="main main--result">
 
 const screenResultTimeOver = getElementFromTemplate(template);
 
-
 const replayButton = screenResultTimeOver.querySelector(`.main-replay`);
 
-const onClickReplayButton = () => {
-  renderScreen(screenWelcome);
-};
 
-replayButton.addEventListener(`click`, onClickReplayButton);
+replayButton.addEventListener(`click`, () => {
+  renderScreen(screenWelcome);
+});
 
 export default screenResultTimeOver;

@@ -1,4 +1,4 @@
-import getElementFromTemplate from '../helpers/getElementFromTemplate';
+import getElementFromTemplate from '../helpers/get-element-from-template';
 import renderScreen from '../helpers/show';
 import screenLevelGenre from './screen-level-gender';
 

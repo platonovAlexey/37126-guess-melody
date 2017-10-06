@@ -1,4 +1,5 @@
-import getElementFromTemplate from '../helpers/getElementFromTemplate';
+import getElementFromTemplate from '../helpers/get-element-from-template';
+import getRandomElement from '../helpers/get-random-element';
 import renderScreen from '../helpers/show';
 import screenResultFail from './screen-result-fail';
 import screenResultSuccess from './screen-result-success';
@@ -122,18 +123,12 @@ for (let checkbox of checkboxList) {
   checkbox.addEventListener(`change`, validateForm);
 }
 
-const getRandomElement = (array) => {
-  let number = Math.round(Math.random() * (array.length - 1));
-  return array[number];
-};
-
-const onClickSendButton = (event) => {
+sendButton.addEventListener(`click`, (event) =>{
   event.preventDefault();
   const screenResult = getRandomElement([screenResultSuccess, screenResultFail, screenResultTimeOver]);
   renderScreen(screenResult);
   setStateCheckbox();
-};
+});
 
-sendButton.addEventListener(`click`, onClickSendButton);
 
 export default screenLevelGenre;
