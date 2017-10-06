@@ -130,5 +130,4 @@ sendButton.addEventListener(`click`, (event) =>{
   setStateCheckbox();
 });
 
-
 export default screenLevelGenre;

@@ -22,5 +22,4 @@ replayButton.addEventListener(`click`, () => {
   renderScreen(screenWelcome);
 });
 
-
 export default screenResultSuccess;

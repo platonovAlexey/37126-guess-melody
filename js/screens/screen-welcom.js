@@ -22,4 +22,3 @@ playButton.addEventListener(`click`, () => {
 });
 
 export default screenWelcome;
-
