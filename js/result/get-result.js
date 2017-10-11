@@ -5,14 +5,13 @@ const getResult = (statistics, result) => {
   if (result.attempts === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
-  statistics.push(result.score);
+  statistics.concat(result.score);
   statistics.sort((left, right) => right - left);
   const amountOfPlayers = statistics.length;
   const position = statistics.lastIndexOf(result.score) + 1;
   const percent = (amountOfPlayers - position) / amountOfPlayers * 100;
 
   return `Вы заняли ${position} место из ${amountOfPlayers} игроков. Это лучше чем у ${percent}% игроков`;
-
 };
 
 export default getResult;

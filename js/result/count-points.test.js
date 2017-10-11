@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from 'assert';
 import countPoints from './count-points';
 
 describe(`Function countPoints`, () => {

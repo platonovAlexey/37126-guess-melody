@@ -1,4 +1,4 @@
-const allTime = 30000;
+const allTime = (30 * 1000);
 const numberAnswers = 10;
 
 const countPoints = (answers, amountOfNotes) => {

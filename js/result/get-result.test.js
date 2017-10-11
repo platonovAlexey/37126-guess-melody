@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from 'assert';
 import getResult from './get-result';
 
 describe(`Function getResult`, () => {
@@ -24,7 +24,7 @@ describe(`Function getResult`, () => {
 
   it(`Игрок выиграл`, () => {
 
-    let statistics = [5, 3, 2, 1];
+    let statistics = [5, 4, 3, 1, 1];
     let result = {
       score: 4,
       attempts: 3,
@@ -32,26 +32,26 @@ describe(`Function getResult`, () => {
     };
     assert.equal(getResult(statistics, result), `Вы заняли 2 место из 5 игроков. Это лучше чем у 60% игроков`);
 
-    statistics = [];
-    result = {
-      score: 1,
-      attempts: 1,
-      timeLeft: 1000
-    };
-    assert.equal(getResult(statistics, result), `Вы заняли 1 место из 1 игроков. Это лучше чем у 0% игроков`);
-
     statistics = [5, 4, 3, 1];
-    result = {
-      score: 2,
-      attempts: 2,
-      timeLeft: 1000
-    };
-    assert.equal(getResult(statistics, result), `Вы заняли 4 место из 5 игроков. Это лучше чем у 20% игроков`);
-
-    statistics = [5, 4, 3, 3];
     result = {
       score: 3,
       attempts: 3,
+      timeLeft: 1000
+    };
+    assert.equal(getResult(statistics, result), `Вы заняли 3 место из 4 игроков. Это лучше чем у 25% игроков`);
+
+    statistics = [4, 4, 3, 1, 1];
+    result = {
+      score: 3,
+      attempts: 1,
+      timeLeft: 1000
+    };
+    assert.equal(getResult(statistics, result), `Вы заняли 3 место из 5 игроков. Это лучше чем у 40% игроков`);
+
+    statistics = [5, 5, 3, 2, 1];
+    result = {
+      score: 1,
+      attempts: 2,
       timeLeft: 1000
     };
     assert.equal(getResult(statistics, result), `Вы заняли 5 место из 5 игроков. Это лучше чем у 0% игроков`);
