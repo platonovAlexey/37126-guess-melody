@@ -1,14 +1,12 @@
-const getTimer = (second) => {
-  if (second === 0) {
-    return -1;
-  }
+const timeMessage = `Время вышло`;
 
+const getTimer = (second) => {
   return {
     data: second,
     tick() {
-      return this.data - 1;
+      return (second === 0) ? timeMessage : getTimer(second - 1);
     }
   };
 };
 
-export default getTimer;
+export {timeMessage, getTimer};

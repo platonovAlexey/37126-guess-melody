@@ -5,7 +5,7 @@ const getResult = (statistics, result) => {
   if (result.attempts === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
-  statistics.concat(result.score);
+  statistics.slice(result.score);
   statistics.sort((left, right) => right - left);
   const amountOfPlayers = statistics.length;
   const position = statistics.lastIndexOf(result.score) + 1;
