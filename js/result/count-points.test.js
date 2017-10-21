@@ -1,81 +1,46 @@
 import assert from 'assert';
 import countPoints from './count-points';
 
-describe(`Function countPoints`, () => {
-  it(`Игрок ответил меньше 10 вопросов, должно вернуться -1`, () => {
-    let answers = [
-      {answer: true, time: 22000},
-      {answer: true, time: 26000},
-      {answer: true, time: 29000},
-      {answer: true, time: 20000},
-      {answer: true, time: 11000},
-      {answer: true, time: 2000}
-    ];
-
-    assert.equal(countPoints(answers, 0), -1);
-
-    answers = [
-      {answer: true, time: 22000},
-      {answer: true, time: 26000},
-      {answer: true, time: 30000},
-      {answer: true, time: 20000},
-      {answer: true, time: 11000},
-      {answer: true, time: 2000},
-      {answer: true, time: 7000},
-      {answer: true, time: 44000},
-      {answer: true, time: 8000}
-    ];
-
-    assert.equal(countPoints(answers, 3), -1);
-
+describe(`countPoints function`, () => {
+  describe(`Победил`, () => {
+    it(`Возвращает 20 points`, () => {
+      assert.equal(20, countPoints([10, 10, 10, 10, 10, 10, 10, 10, 10, 10], 3));
+    });
+    it(`Возвращает 18`, () => {
+      assert.equal(18, countPoints([10, 10, 10, 10, 10, 10, 10, 10, 10, 10], 2));
+    });
+    it(`Возвращает 16`, () => {
+      assert.equal(16, countPoints([10, 10, 10, 10, 10, 10, 10, 10, 10, 10], 1));
+    });
+    it(`Возвращает 14`, () => {
+      assert.equal(14, countPoints([10, 10, 10, 10, 10, 10, 10, 10, 10, 10], 0));
+    });
+    it(`Возвращает 20`, () => {
+      assert.equal(20, countPoints([10, 10, 10, 10, 10, 10, 10, 10, 10, 10], 3));
+    });
+    it(`Возвращает 20`, () => {
+      assert.equal(20, countPoints([20, 32, 32, 32, 32, 32, 32, 32, 32, 32], 3));
+    });
+    it(`Возвращает 18`, () => {
+      assert.equal(18, countPoints([8, 32, 32, 32, 32, 32, 32, 32, 32, 32], 2));
+    });
+    it(`Возвращает 16`, () => {
+      assert.equal(16, countPoints([16, 32, 32, 32, 32, 32, 32, 32, 32, 32], 1));
+    });
+    it(`Возвращает 14`, () => {
+      assert.equal(14, countPoints([14, 32, 32, 32, 32, 32, 32, 32, 32, 32], 0));
+    });
   });
 
-  it(`Игрок быстро ответил на все вопросы без ошибок, должно вернуться 20`, () => {
-    let answers = [
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000}
-    ];
-
-    assert.strictEqual(countPoints(answers, 3), 20);
-
-    answers = [
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000},
-      {answer: true, time: 13000}
-    ];
-
-    assert.strictEqual(countPoints(answers, 1), 20);
-  });
-
-  it(`Игрок медленно ответил на все вопросы без ошибок, должно вернуть 10`, () => {
-    let answers = [
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000},
-      {answer: true, time: 66000}
-    ];
-
-    assert.strictEqual(countPoints(answers, 3), 10);
+  describe(`Loser scenarios`, () => {
+    it(`Возвращает -1`, () => {
+      assert.equal(-1, countPoints([1, 2, 3, 4, 5, 6, 7, 8, 9], -1));
+    });
+    it(`Возвращает -1`, () => {
+      assert.equal(-1, countPoints([1, 2, 3, 4, 5, 6, 7, 8, 9], 0));
+    });
+    it(`Возвращает -1`, () => {
+      assert.equal(-1, countPoints([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], -1));
+    });
   });
 });

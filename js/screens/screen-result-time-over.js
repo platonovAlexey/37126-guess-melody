@@ -1,8 +1,8 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
-import renderScreen from '../helpers/show';
-import screenWelcome from './screen-welcom';
+import renderScreen from '../helpers/render-screen';
+import {defaultState} from '../data/data';
 
-const template = `<section class="main main--result">
+const screenLevelTimeOverTemplate = `<section class="main main--result">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
     <h2 class="title">Увы и ах!</h2>
@@ -10,13 +10,14 @@ const template = `<section class="main main--result">
     <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
   </section>`;
 
-const screenResultTimeOver = getElementFromTemplate(template);
+const screenResultTimeOver = getElementFromTemplate(screenLevelTimeOverTemplate);
 
 const replayButton = screenResultTimeOver.querySelector(`.main-replay`);
 
 
-replayButton.addEventListener(`click`, () => {
-  renderScreen(screenWelcome);
+replayButton.addEventListener(`click`, (event) => {
+  event.preventDefault();
+  renderScreen(defaultState);
 });
 
 export default screenResultTimeOver;
