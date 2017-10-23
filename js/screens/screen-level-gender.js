@@ -51,11 +51,11 @@ const screenLevelGenderTemplate = (screen) => {
 
   answersContainer.addEventListener(`change`, () => {
     const answersArr = [];
-    [...checkboxList].forEach((item) => {
-      if (item.checked) {
-        answersArr.push(item);
+    for (const checkbox of checkboxList) {
+      if (checkbox.checked) {
+        answersArr.push(checkbox);
       }
-    });
+    }
 
     sendButton.disabled = !(answersArr.length > 0);
     arr = answersArr;
@@ -74,8 +74,8 @@ const screenLevelGenderTemplate = (screen) => {
       });
 
       if (countRightAnswers === count) {
-        statsArray.push(TIME_ANSWER);
-        screenStack.push(screen);
+        statsArray.slice().push(TIME_ANSWER);
+        screenStack.slice().push(screen);
         screen = setNextLevel(screen);
       } else {
         if (screen.lives <= 0 || screen.time <= 0) {

@@ -5,15 +5,6 @@ import screenLevelArtist from '../screens/screen-level-artist';
 import screenLevelGenre from '../screens/screen-level-gender';
 import countPoint from '../result/count-points';
 
-
-// const app = document.querySelector(`.app`);
-// let currentScreen;
-//
-// const renderScreen = (template) => {
-//   currentScreen = app.querySelector(`.main`);
-//   app.replaceChild(template, currentScreen);
-// };
-
 const screens = {
   'artist': screenLevelArtist,
   'genre': screenLevelGenre
@@ -36,7 +27,6 @@ const renderScreen = (screen) => {
       if (levels[`state-` + screen.level]) {
         const level = levels[`state-` + screen.level];
         const screenRender = screens[level.type];
-
         mainTemplate.appendChild(screenRender(screen));
       } else {
         screen.points = countPoint(statsArray, screen.lives);

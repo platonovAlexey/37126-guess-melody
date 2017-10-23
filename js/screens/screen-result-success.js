@@ -1,9 +1,10 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
 import renderScreen from '../helpers/render-screen';
 import {defaultState} from '../data/data';
+import logo from './common/logo';
 
 const screenLevelSuccessTemplate = `<section class="main main--result">
-    <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+    ${logo()}
     <h2 class="title">Вы настоящий меломан!</h2>
     <div class="main-stat">За&nbsp;3&nbsp;минуты и 25&nbsp;секунд
       <br>вы&nbsp;набрали 12 баллов (8 быстрых)
@@ -13,7 +14,6 @@ const screenLevelSuccessTemplate = `<section class="main main--result">
   </section>`;
 
 const screenResultSuccess = getElementFromTemplate(screenLevelSuccessTemplate);
-
 const replayButton = screenResultSuccess.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, () => {

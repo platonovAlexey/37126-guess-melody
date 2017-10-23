@@ -38,14 +38,14 @@ const screenLevelArtistTemplate = (screen) => {
 
   const screenLevelArtist = getElementFromTemplate(temp);
   const answerListRadioButtons = screenLevelArtist.querySelectorAll(`.main-answer-r`);
-  [...answerListRadioButtons].forEach((item) => {
+  for (const item of answerListRadioButtons) {
     item.addEventListener(`change`, (event) => {
       event.preventDefault();
       if (item.checked) {
         switch (item.value) {
           case `true`: {
-            statsArray.push(TIME_ANSWER);
-            screenStack.push(screen);
+            statsArray.slice().push(TIME_ANSWER);
+            screenStack.slice().push(screen);
             screen = setNextLevel(screen);
             break;
           }
@@ -62,7 +62,7 @@ const screenLevelArtistTemplate = (screen) => {
         renderScreen(screen);
       }
     });
-  });
+  }
 
   return screenLevelArtist;
 };
