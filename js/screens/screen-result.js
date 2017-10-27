@@ -4,8 +4,8 @@ import getResult from '../result/get-result';
 import {defaultState, statistics} from '../data/data';
 import logo from './common/logo';
 
-const resultTemplate = (screen) => {
-  const resultTextTemplate = getResult(statistics, screen);
+const resultTemplate = (game) => {
+  const resultTextTemplate = getResult(statistics, game);
   const temp = `<section class="main main--result">
     ${logo()}
     <h2 class="title">${resultTextTemplate.title}</h2>

@@ -1,4 +1,4 @@
-import renderScreen from './helpers/render-screen';
-import {defaultState} from './data/data.js';
+import setScreen from './helpers/set-screen';
+import showWelcome from './game/screen-welcome/welcome';
 
-renderScreen(defaultState);
+setScreen(showWelcome());
