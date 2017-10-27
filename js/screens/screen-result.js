@@ -5,13 +5,13 @@ import {defaultState, statistics} from '../data/data';
 import logo from './common/logo';
 
 const resultTemplate = (screen) => {
-  const resultText = getResult(statistics, screen);
+  const resultTextTemplate = getResult(statistics, screen);
   const temp = `<section class="main main--result">
     ${logo()}
-    <h2 class="title">${resultText.title}</h2>
-    <div class="main-stat">${resultText.stat}</div>
-    ${resultText.comparison || ``}
-    <span role="button" tabindex="0" class="main-replay">${resultText.button}</span>
+    <h2 class="title">${resultTextTemplate.title}</h2>
+    <div class="main-stat">${resultTextTemplate.stat}</div>
+    ${resultTextTemplate.comparison || ``}
+    <span role="button" tabindex="0" class="main-replay">${resultTextTemplate.button}</span>
   </section>`;
 
   const resultScreen = getElementFromTemplate(temp);

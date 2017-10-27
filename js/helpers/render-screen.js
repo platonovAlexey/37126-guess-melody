@@ -1,4 +1,4 @@
-import {levels, statsArray} from '../data/data';
+import {levels} from '../data/data';
 import resultScreen from '../screens/screen-result';
 import screenWelcome from '../screens/screen-welcom';
 import screenLevelArtist from '../screens/screen-level-artist';
@@ -13,6 +13,7 @@ const screens = {
 const mainTemplate = document.querySelector(`.main`);
 
 const renderScreen = (screen) => {
+  const statsArray = [];
   mainTemplate.innerHTML = ``;
   switch (screen.level) {
     case 0: {

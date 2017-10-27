@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
 import countPoint from '../result/count-points';
-import {levels, statsArray, setNextLevel, setLives, screenStack, TIME_ANSWER} from '../data/data';
+import {levels, setNextLevel, setLives, TIME_ANSWER} from '../data/data';
 import renderScreen from '../helpers/render-screen';
 import getTimer from './module-timer';
 
@@ -64,6 +64,8 @@ const screenLevelGenderTemplate = (screen) => {
 
   sendButton.addEventListener(`click`, (event) => {
     event.preventDefault();
+    const statsArray = [];
+    const screenStack = [];
     if (arr.length > 0) {
       let count = 0;
       arr.forEach((item) => {
@@ -74,8 +76,8 @@ const screenLevelGenderTemplate = (screen) => {
       });
 
       if (countRightAnswers === count) {
-        statsArray.slice().push(TIME_ANSWER);
-        screenStack.slice().push(screen);
+        statsArray.push(TIME_ANSWER);
+        screenStack.push(screen);
         screen = setNextLevel(screen);
       } else {
         if (screen.lives <= 0 || screen.time <= 0) {

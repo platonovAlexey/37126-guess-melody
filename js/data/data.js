@@ -252,10 +252,6 @@ export const levels = {
   },
 };
 
-export const statsArray = [];
-
-export const screenStack = [];
-
 export const statistics = [1, 2, 3];
 
 export const setNextLevel = (screen) => {

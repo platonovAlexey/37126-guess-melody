@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
 import countPoint from '../result/count-points';
-import {levels, statsArray, setNextLevel, setLives, screenStack, TIME_ANSWER} from '../data/data.js';
+import {levels, setNextLevel, setLives, TIME_ANSWER} from '../data/data.js';
 import renderScreen from '../helpers/render-screen';
 import getTimer from './module-timer';
 
@@ -39,13 +39,15 @@ const screenLevelArtistTemplate = (screen) => {
   const screenLevelArtist = getElementFromTemplate(temp);
   const answerListRadioButtons = screenLevelArtist.querySelectorAll(`.main-answer-r`);
   for (const item of answerListRadioButtons) {
+    const statsArray = [];
+    const screenStack = [];
     item.addEventListener(`change`, (event) => {
       event.preventDefault();
       if (item.checked) {
         switch (item.value) {
           case `true`: {
-            statsArray.slice().push(TIME_ANSWER);
-            screenStack.slice().push(screen);
+            statsArray.push(TIME_ANSWER);
+            screenStack.push(screen);
             screen = setNextLevel(screen);
             break;
           }
