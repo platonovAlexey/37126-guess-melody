@@ -3,7 +3,6 @@ import getElementFromTemplate from '../helpers/get-element-from-template';
 import logo from './common/logo';
 import {defaultState, setNextLevel} from '../data/data';
 
-
 const template = `<section class="main main--welcome">
     ${logo()}
     <button class="main-play">Начать игру</button>

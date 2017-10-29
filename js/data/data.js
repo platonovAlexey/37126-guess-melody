@@ -4,6 +4,8 @@ export const defaultState = Object.freeze({
   time: 300
 });
 
+export const TIME_ANSWER = 30;
+
 export const levels = {
   'state-1': {
     type: `artist`,
@@ -268,6 +270,13 @@ export const setLives = (screen, lives) => {
   return screen;
 };
 
+export const makeState = () => {
+  let state = Object.assign({}, defaultState);
+  state.statsArray = [];
+
+  return state;
+};
+
 export const MAX_LIVES = 3;
 
 export const FailResultText = {
@@ -282,5 +291,3 @@ export const FailResultText = {
     button: `Попробовать ещё раз`
   }
 };
-
-export const TIME_ANSWER = 30;

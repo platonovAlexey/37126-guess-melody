@@ -13,7 +13,7 @@ const screens = {
 const mainTemplate = document.querySelector(`.main`);
 
 const renderScreen = (screen) => {
-  const statsArray = [];
+  let statsArray = [];
   mainTemplate.innerHTML = ``;
   switch (screen.level) {
     case 0: {
@@ -30,7 +30,7 @@ const renderScreen = (screen) => {
         const screenRender = screens[level.type];
         mainTemplate.appendChild(screenRender(screen));
       } else {
-        screen.points = countPoint(statsArray, screen.lives);
+        screen.score = countPoint(statsArray, screen.lives);
         mainTemplate.appendChild(resultScreen(screen, statsArray));
       }
       break;

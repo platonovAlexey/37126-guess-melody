@@ -54,7 +54,7 @@ const screenLevelArtistTemplate = (screen) => {
           case `false`: {
             if (screen.lives <= 0 || screen.time <= 0) {
               screen.level = `fail`;
-              screen.points = countPoint(statsArray, screen.lives);
+              screen.score = countPoint(statsArray, screen.lives);
             } else {
               screen = setLives(screen, screen.lives - 1);
             }

@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
 import renderScreen from '../helpers/render-screen';
-import {defaultState} from '../data/data';
+import {makeState} from '../data/data';
 import logo from './common/logo';
 
 const screenLevelSuccessTemplate = `<section class="main main--result">
@@ -17,7 +17,7 @@ const screenResultSuccess = getElementFromTemplate(screenLevelSuccessTemplate);
 const replayButton = screenResultSuccess.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, () => {
-  renderScreen(defaultState);
+  renderScreen(makeState);
 });
 
 export default screenResultSuccess;
