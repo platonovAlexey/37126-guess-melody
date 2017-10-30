@@ -1,133 +1,96 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
-import getRandomElement from '../helpers/get-random-element';
-import renderScreen from '../helpers/show';
-import screenResultFail from './screen-result-fail';
-import screenResultSuccess from './screen-result-success';
-import screenResultTimeOver from './screen-result-time-over';
+import countPoint from '../result/count-points';
+import {levels, setNextLevel, setLives, TIME_ANSWER} from '../data/data';
+import renderScreen from '../helpers/render-screen';
+import getTimer from './module-timer';
 
-const template = `<section class="main main--level main--level-genre">
-    <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-      <circle
-        cx="390" cy="390" r="370"
-        class="timer-line"
-        style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+const answerTemplate = (answers) => `${[...answers].map((answer) => `<div class="genre-answer">
+<div class="player-wrapper">
+            <div class="player">
+              <audio src="${answer.srcAudio}"></audio>
+              <button class="player-control player-control--play"></button>
+              <div class="player-track">
+                <span class="player-status"></span>
+              </div>
+            </div>
+          </div>
+          <input type="checkbox" name="answer" value="${answer.genre}" id="${answer.genre}">
+          <label class="genre-answer-check" for="${answer.genre}"></label>
+        </div>`).join(``)}`;
 
-      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="timer-value-mins">05</span><!--
-        --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">00</span>
-      </div>
-    </svg>
-    <div class="main-mistakes">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    </div>
+const screenLevelGenderTemplate = (screen) => {
+  const temp = `<section class="main main--level main--level-genre">
 
+    ${getTimer(screen)}
+    
     <div class="main-wrap">
-      <h2 class="title">Выберите инди-рок треки</h2>
+      <h2 class="title">${levels[`state-` + screen.level].question}</h2>
       <form class="genre">
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--pause"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-1">
-          <label class="genre-answer-check" for="a-1"></label>
-        </div>
-
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--play"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-2">
-          <label class="genre-answer-check" for="a-2"></label>
-        </div>
-
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--play"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-3">
-          <label class="genre-answer-check" for="a-3"></label>
-        </div>
-
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--play"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-4">
-          <label class="genre-answer-check" for="a-4"></label>
-        </div>
-
+        ${answerTemplate(levels[`state-` + screen.level].answers)}
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>
     </div>
   </section>`;
 
-const screenLevelGenre = getElementFromTemplate(template);
-const sendButton = screenLevelGenre.querySelector(`.genre-answer-send`);
-const checkboxList = screenLevelGenre.querySelectorAll(`input[type="checkbox"]`);
-sendButton.disabled = true;
+  const screenLevelGenre = getElementFromTemplate(temp);
+  const sendButton = screenLevelGenre.querySelector(`.genre-answer-send`);
+  const checkboxList = screenLevelGenre.querySelectorAll(`input[name=answer]`);
+  const answersContainer = screenLevelGenre.querySelector(`.genre`);
+  sendButton.disabled = true;
 
-const setStateCheckbox = () => {
-  for (let checkbox of checkboxList) {
-    checkbox.checked = false;
-  }
-  toggleSendButton(false);
-};
+  const rightAnswer = levels[`state-` + screen.level].genre;
+  let countRightAnswers = 0;
+  let arr = [];
 
-const toggleSendButton = (condition) => {
-  if (condition) {
-    sendButton.disabled = false;
-  } else {
-    sendButton.disabled = true;
-  }
-};
-
-const validateForm = () => {
-  let valid = false;
-  for (const checkbox of checkboxList) {
-    if (checkbox.checked) {
-      valid = true;
-      break;
+  [...checkboxList].forEach((item) => {
+    if (item.value.toLowerCase() === rightAnswer.toLowerCase()) {
+      countRightAnswers++;
     }
-  }
-  toggleSendButton(valid);
+    return countRightAnswers;
+  });
+
+  answersContainer.addEventListener(`change`, () => {
+    const answersArr = [];
+    for (const checkbox of checkboxList) {
+      if (checkbox.checked) {
+        answersArr.push(checkbox);
+      }
+    }
+
+    sendButton.disabled = !(answersArr.length > 0);
+    arr = answersArr;
+
+  });
+
+  sendButton.addEventListener(`click`, (event) => {
+    event.preventDefault();
+    if (arr.length > 0) {
+      let count = 0;
+      arr.forEach((item) => {
+        if (item.value.toLowerCase() === rightAnswer.toLowerCase()) {
+          count++;
+        }
+        return count;
+      });
+
+      if (countRightAnswers === count) {
+        screen.statsArray.push(TIME_ANSWER);
+        screen = setNextLevel(screen);
+      } else {
+        if (screen.lives <= 0 || screen.time <= 0) {
+          screen.level = `fail`;
+          screen.score = countPoint(screen.statsArray, screen.lives);
+        } else {
+          screen = setLives(screen, screen.lives - 1);
+        }
+      }
+
+      renderScreen(screen);
+    }
+  });
+
+  return screenLevelGenre;
 };
 
-for (let checkbox of checkboxList) {
-  checkbox.addEventListener(`change`, validateForm);
-}
 
-sendButton.addEventListener(`click`, (event) =>{
-  event.preventDefault();
-  const screenResult = getRandomElement([screenResultSuccess, screenResultFail, screenResultTimeOver]);
-  renderScreen(screenResult);
-  setStateCheckbox();
-});
-
-export default screenLevelGenre;
+export default screenLevelGenderTemplate;

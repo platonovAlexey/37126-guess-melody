@@ -1,10 +1,10 @@
-import renderScreen from '../helpers/show';
+import renderScreen from '../helpers/render-screen';
 import getElementFromTemplate from '../helpers/get-element-from-template';
-import screenLevelArtist from './screen-level-artist';
-
+import logo from './common/logo';
+import {makeState, setNextLevel} from '../data/data';
 
 const template = `<section class="main main--welcome">
-    <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+    ${logo()}
     <button class="main-play">Начать игру</button>
     <h2 class="title main-title">Правила игры</h2>
     <p class="text main-text">
@@ -17,8 +17,10 @@ const template = `<section class="main main--welcome">
 const screenWelcome = getElementFromTemplate(template);
 const playButton = screenWelcome.querySelector(`.main-play`);
 
-playButton.addEventListener(`click`, () => {
-  renderScreen(screenLevelArtist);
+playButton.addEventListener(`click`, (e) => {
+  e.preventDefault();
+  const startGame = setNextLevel(makeState());
+  renderScreen(startGame);
 });
 
 export default screenWelcome;

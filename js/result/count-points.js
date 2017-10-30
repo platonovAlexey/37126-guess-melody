@@ -1,21 +1,28 @@
+import {MAX_LIVES} from '../data/data';
+
 const allTime = (30 * 1000);
 const numberAnswers = 10;
 
-const countPoints = (answers, amountOfNotes) => {
-  if (answers.length < numberAnswers || amountOfNotes < 0) {
-    return -1;
+const countPoints = (answersArray, lives) => {
+  const answers = answersArray.slice();
+  let score = 0;
+  if (answers.length === numberAnswers) {
+    for (let i = 0; i < answers.length; i++) {
+      score += (answers[i] <= allTime) ? 2 : 1;
+    }
+
+    if (lives >= 0 && lives < MAX_LIVES) {
+      score -= (MAX_LIVES - lives) * 2;
+    }
+
+    if (lives < 0) {
+      score = -1;
+    }
+  } else {
+    score = -1;
   }
 
-  return answers.reduce((sum, current) => {
-    if (current.answer && current.time < allTime) {
-      return sum + 2;
-    } else if (current.answer) {
-      return sum + 1;
-    } else {
-      return sum - 2;
-    }
-  }, 0);
-
+  return score;
 };
 
 export default countPoints;

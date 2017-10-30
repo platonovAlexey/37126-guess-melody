@@ -1,5 +1,4 @@
-import screenWelcome from './screens/screen-welcom';
-import renderScreen from './helpers/show';
+import renderScreen from './helpers/render-screen';
+import {makeState} from './data/data.js';
 
-renderScreen(screenWelcome);
-
+renderScreen(makeState());
