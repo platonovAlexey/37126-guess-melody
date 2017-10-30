@@ -39,22 +39,19 @@ const screenLevelArtistTemplate = (screen) => {
   const screenLevelArtist = getElementFromTemplate(temp);
   const answerListRadioButtons = screenLevelArtist.querySelectorAll(`.main-answer-r`);
   for (const item of answerListRadioButtons) {
-    const statsArray = [];
-    const screenStack = [];
     item.addEventListener(`change`, (event) => {
       event.preventDefault();
       if (item.checked) {
         switch (item.value) {
           case `true`: {
-            statsArray.push(TIME_ANSWER);
-            screenStack.push(screen);
+            screen.statsArray.push(TIME_ANSWER);
             screen = setNextLevel(screen);
             break;
           }
           case `false`: {
             if (screen.lives <= 0 || screen.time <= 0) {
               screen.level = `fail`;
-              screen.score = countPoint(statsArray, screen.lives);
+              screen.score = countPoint(screen.statsArray, screen.lives);
             } else {
               screen = setLives(screen, screen.lives - 1);
             }

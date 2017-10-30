@@ -1,7 +1,7 @@
 import renderScreen from '../helpers/render-screen';
 import getElementFromTemplate from '../helpers/get-element-from-template';
 import logo from './common/logo';
-import {defaultState, setNextLevel} from '../data/data';
+import {makeState, setNextLevel} from '../data/data';
 
 const template = `<section class="main main--welcome">
     ${logo()}
@@ -19,7 +19,7 @@ const playButton = screenWelcome.querySelector(`.main-play`);
 
 playButton.addEventListener(`click`, (e) => {
   e.preventDefault();
-  const startGame = setNextLevel(defaultState);
+  const startGame = setNextLevel(makeState());
   renderScreen(startGame);
 });
 

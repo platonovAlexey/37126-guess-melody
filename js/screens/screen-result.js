@@ -1,7 +1,7 @@
 import getElementFromTemplate from '../helpers/get-element-from-template';
 import renderScreen from '../helpers/render-screen';
 import getResult from '../result/get-result';
-import {defaultState, statistics} from '../data/data';
+import {makeState, statistics} from '../data/data';
 import logo from './common/logo';
 
 const resultTemplate = (screen) => {
@@ -18,7 +18,7 @@ const resultTemplate = (screen) => {
   const tryAgainButton = resultScreen.querySelector(`.main-replay`);
   tryAgainButton.addEventListener(`click`, (event) => {
     event.preventDefault();
-    renderScreen(defaultState);
+    renderScreen(makeState());
   });
 
   return resultScreen;

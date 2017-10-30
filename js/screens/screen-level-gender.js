@@ -64,8 +64,6 @@ const screenLevelGenderTemplate = (screen) => {
 
   sendButton.addEventListener(`click`, (event) => {
     event.preventDefault();
-    const statsArray = [];
-    const screenStack = [];
     if (arr.length > 0) {
       let count = 0;
       arr.forEach((item) => {
@@ -76,13 +74,12 @@ const screenLevelGenderTemplate = (screen) => {
       });
 
       if (countRightAnswers === count) {
-        statsArray.push(TIME_ANSWER);
-        screenStack.push(screen);
+        screen.statsArray.push(TIME_ANSWER);
         screen = setNextLevel(screen);
       } else {
         if (screen.lives <= 0 || screen.time <= 0) {
           screen.level = `fail`;
-          screen.score = countPoint(statsArray, screen.lives);
+          screen.score = countPoint(screen.statsArray, screen.lives);
         } else {
           screen = setLives(screen, screen.lives - 1);
         }

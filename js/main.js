@@ -1,4 +1,4 @@
 import renderScreen from './helpers/render-screen';
-import {defaultState} from './data/data.js';
+import {makeState} from './data/data.js';
 
-renderScreen(defaultState);
+renderScreen(makeState());
