@@ -15,7 +15,7 @@ const replayButton = screenResultTimeOver.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, (event) => {
   event.preventDefault();
-  renderScreen(makeState);
+  renderScreen(makeState());
 });
 
 export default screenResultTimeOver;

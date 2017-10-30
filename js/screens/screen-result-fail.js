@@ -15,7 +15,7 @@ const replayButton = screenResultFail.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, (event) => {
   event.preventDefault();
-  renderScreen(makeState);
+  renderScreen(makeState());
 });
 
 export default screenResultFail;

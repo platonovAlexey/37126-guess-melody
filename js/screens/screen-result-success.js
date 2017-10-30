@@ -17,7 +17,7 @@ const screenResultSuccess = getElementFromTemplate(screenLevelSuccessTemplate);
 const replayButton = screenResultSuccess.querySelector(`.main-replay`);
 
 replayButton.addEventListener(`click`, () => {
-  renderScreen(makeState);
+  renderScreen(makeState());
 });
 
 export default screenResultSuccess;
