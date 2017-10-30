@@ -100,7 +100,6 @@ export default class LevelGenreView extends AbstractView {
 
     sendButton.addEventListener(`click`, (e) => {
       e.preventDefault();
-      const statsArray = [];
       if (arr.length > 0) {
         let count = 0;
         arr.forEach((item) => {
@@ -115,7 +114,7 @@ export default class LevelGenreView extends AbstractView {
         } else {
           let result = Result.DIE;
           if (this.game.lives <= 0 || this.game.time <= 0) {
-            this.game.score = countPoints(statsArray, this.game.lives);
+            this.game.score = countPoints(this.game.statsArray, this.game.lives);
             result = Result.FAIL;
           }
           this.onAnswer(result);

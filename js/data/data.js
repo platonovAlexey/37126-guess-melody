@@ -1,5 +1,6 @@
 export const GAME_TIME = 300;
 export const MAX_LIVES = 3;
+export const TIME_ANSWER = 30;
 
 export const defaultState = Object.freeze({
   lives: 3,
@@ -281,6 +282,13 @@ export const setTime = (game, time) => {
 
 export const getLevel = (game) => {
   return levels[`state-` + game.level] || false;
+};
+
+export const makeState = () => {
+  let state = Object.assign({}, defaultState);
+  state.statsArray = [];
+
+  return state;
 };
 
 export const FailResultText = {

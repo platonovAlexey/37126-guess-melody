@@ -6,10 +6,9 @@ import countPoints from '../result/count-points';
 import setScreen from '../helpers/set-screen';
 import getTimer from '../helpers/get-timer';
 import gameOver from './game-over/game-over';
-import {levels, defaultState, setLives, setNextLevel, setTime, Result} from '../data/data';
+import {levels, makeState, setLives, setNextLevel, setTime, Result} from '../data/data';
 
 const changeLevel = (game) => {
-  const statsArray = [];
   let level = new LevelGenreView(game, game.level);
 
   if (levels[`state-` + game.level].type === `artist`) {
@@ -35,7 +34,7 @@ const changeLevel = (game) => {
         game = setTime(game, 0);
         const failScreen = resultScreen(game);
         failScreen.onRepeat = () => {
-          statsArray.length = 0;
+          game.statsArray.length = 0;
           setScreen(showWelcome());
         };
         setScreen(failScreen);
@@ -45,14 +44,14 @@ const changeLevel = (game) => {
         game = setTime(game, timer.getCurrentTimer());
 
         const levelTime = startLevelTime - game.time;
-        statsArray.push(levelTime);
+        game.statsArray.push(levelTime);
 
         const winScreen = resultScreen(game);
         winScreen.onRepeat = () => {
-          statsArray.length = 0;
+          game.statsArray.length = 0;
           setScreen(showWelcome());
         };
-        game.points = countPoints(statsArray, game.lives);
+        game.points = countPoints(game.statsArray, game.lives);
         setScreen(winScreen);
         break;
       }
@@ -60,7 +59,7 @@ const changeLevel = (game) => {
         game = setTime(game, timer.getCurrentTimer());
 
         const levelTime = startLevelTime - game.time;
-        statsArray.push(levelTime);
+        game.statsArray.push(levelTime);
 
         setScreen(changeLevel(setNextLevel(game)));
         break;
@@ -73,4 +72,4 @@ const changeLevel = (game) => {
   return level;
 };
 
-export default () => changeLevel(defaultState);
+export default () => changeLevel(makeState());

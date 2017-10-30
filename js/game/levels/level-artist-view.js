@@ -75,7 +75,6 @@ export default class LevelArtistView extends AbstractView {
 
     [...answerListRadioButtons].forEach((item, i) => {
       item.addEventListener(`change`, (e) => {
-        const statsArray = [];
         e.preventDefault();
         if (item.checked) {
           if (i === rightAnswerIndex) {
@@ -83,7 +82,7 @@ export default class LevelArtistView extends AbstractView {
           } else {
             let result = Result.DIE;
             if (this.game.lives <= 0 || this.game.time <= 0) {
-              this.game.score = countPoints(statsArray, this.game.lives);
+              this.game.score = countPoints(this.game.statsArray, this.game.lives);
               result = Result.FAIL;
             }
             this.onAnswer(result);
