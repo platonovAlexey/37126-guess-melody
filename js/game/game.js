@@ -1,75 +1,83 @@
+import App from '../application';
 import LevelArtistView from './levels/level-artist-view';
 import LevelGenreView from './levels/level-gender-view';
-import resultScreen from './result/result-screen';
-import showWelcome from './screen-welcome/welcome';
-import countPoints from '../result/count-points';
+import GameModel from './game-model';
 import setScreen from '../helpers/set-screen';
-import getTimer from '../helpers/get-timer';
 import gameOver from './game-over/game-over';
-import {levels, makeState, setLives, setNextLevel, setTime, Result} from '../data/data';
+import {levels, defaultState, Result} from '../data/data';
 
-const changeLevel = (game) => {
-  let level = new LevelGenreView(game, game.level);
+export default class GameScreen {
+  constructor(data = levels) {
+    this.model = new GameModel(data);
+    this.view = this.getLevelType(defaultState);
 
-  if (levels[`state-` + game.level].type === `artist`) {
-    level = new LevelArtistView(game, game.level);
+    this.view.onAnswer = (answer) => this.onAnswer(answer);
   }
 
-  const timer = getTimer(game.time, game);
-  timer.start();
-  const startLevelTime = timer.getCurrentTimer();
+  init(game = defaultState) {
+    this.model.update(game);
+    this.model.setTimer();
 
-  gameOver();
+    this.model.timer.start();
+    gameOver();
 
-  level.onAnswer = (answer) => {
-    timer.stop();
+    setScreen(this.view);
+  }
+
+  getLevelType(game) {
+    let level = new LevelGenreView(game, game.level);
+
+    if (levels[`state-` + game.level].type === `artist`) {
+      level = new LevelArtistView(game, game.level);
+    }
+
+    return level;
+  }
+
+  onAnswer(answer) {
+    this.model.timer.stop();
 
     switch (answer) {
       case Result.DIE: {
-        game = setTime(game, timer.getCurrentTimer());
-        setScreen(changeLevel(setLives(game, game.lives - 1)));
+        this.model.die();
+        this.model.setGameTime();
+        this.changeLevel();
         break;
       }
       case Result.FAIL: {
-        game = setTime(game, 0);
-        const failScreen = resultScreen(game);
-        failScreen.onRepeat = () => {
-          game.statsArray.length = 0;
-          setScreen(showWelcome());
-        };
-        setScreen(failScreen);
+        App.gameOver(this.model.game);
         break;
       }
       case Result.WIN: {
-        game = setTime(game, timer.getCurrentTimer());
+        const startLevelTime = this.model.game.time;
+        this.model.setGameTime();
 
-        const levelTime = startLevelTime - game.time;
-        game.statsArray.push(levelTime);
+        this.model.setStat(startLevelTime - this.model.getAnswerTime());
+        this.model.getGamePoints();
 
-        const winScreen = resultScreen(game);
-        winScreen.onRepeat = () => {
-          game.statsArray.length = 0;
-          setScreen(showWelcome());
-        };
-        game.points = countPoints(game.statsArray, game.lives);
-        setScreen(winScreen);
+        App.gameOver(this.model.game);
         break;
       }
       case Result.NEXT: {
-        game = setTime(game, timer.getCurrentTimer());
+        const startLevelTime = this.model.game.time;
+        this.model.setGameTime();
 
-        const levelTime = startLevelTime - game.time;
-        game.statsArray.push(levelTime);
+        this.model.setStat(startLevelTime - this.model.getAnswerTime());
 
-        setScreen(changeLevel(setNextLevel(game)));
+        this.model.nextLevel();
+        this.changeLevel();
         break;
       }
-      default: {
-        setScreen(changeLevel(game));
-      }
     }
-  };
-  return level;
-};
+  }
 
-export default () => changeLevel(makeState());
+  changeLevel() {
+    this.view = this.getLevelType(this.model.game);
+
+    this.model.timer.start();
+
+    this.view.onAnswer = (answer) => this.onAnswer(answer);
+
+    setScreen(this.view);
+  }
+}

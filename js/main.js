@@ -1,5 +1,3 @@
-import setScreen from './helpers/set-screen';
-import showWelcome from './game/screen-welcome/welcome';
+import App from './application';
 
-setScreen(showWelcome());
-
+App.showWelcome();

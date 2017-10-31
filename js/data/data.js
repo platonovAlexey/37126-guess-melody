@@ -284,11 +284,11 @@ export const getLevel = (game) => {
   return levels[`state-` + game.level] || false;
 };
 
-export const makeState = () => {
-  let state = Object.assign({}, defaultState);
-  state.statsArray = [];
+export const makeState = (game) => {
+  game = Object.assign({}, defaultState);
+  game.statsArray = [];
 
-  return state;
+  return game;
 };
 
 export const FailResultText = {
