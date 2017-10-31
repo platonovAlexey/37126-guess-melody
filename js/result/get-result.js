@@ -1,4 +1,5 @@
 import {MAX_LIVES, FailResultText} from '../data/data';
+import getTime from '../helpers/get-time';
 
 const getResult = (statistics, currentResult) => {
   statistics = statistics.slice();
@@ -42,9 +43,12 @@ const getResult = (statistics, currentResult) => {
     if (result.time <= 0) {
       resultText = FailResultText.TIME_FAIL;
     } else {
+      const minutes = getTime(currentResult.time, `min`);
+      const seconds = getTime(currentResult.time, `sec`);
+
       resultText = {
         title: `Вы настоящий меломан!`,
-        stat: `За 3 минуты и 25 секунд
+        stat: `За ${minutes} минуты и ${seconds} секунд
       <br>вы набрали ${result.score} баллов
       <br>совершив ${MAX_LIVES - result.lives} ошибки`,
         comparison: `Вы заняли ${place}-${placeTextEnd}е место из ${statistics.length} игрок${playersTextEnd}. Это лучше чем у ${percent}% игроков`,

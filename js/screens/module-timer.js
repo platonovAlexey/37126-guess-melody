@@ -1,9 +1,5 @@
 import {MAX_LIVES} from '../data/data';
-
-const getTime = (time, type) => {
-  const value = type === `min` ? Math.trunc(time / 60) : Math.trunc(time % 60);
-  return value.length > 1 ? value : `0` + value;
-};
+import getTime from '../helpers/get-time';
 
 const getTimer = (data) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -25,4 +21,3 @@ const getTimer = (data) => {
 };
 
 export default getTimer;
-
