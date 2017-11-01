@@ -4,17 +4,17 @@ import LevelGenreView from './levels/level-gender-view';
 import GameModel from './game-model';
 import setScreen from '../helpers/set-screen';
 import gameOver from './game-over/game-over';
-import {levels, defaultState, Result} from '../data/data';
+import {levels, makeState, Result} from '../data/data';
 
 export default class GameScreen {
   constructor(data = levels) {
     this.model = new GameModel(data);
-    this.view = this.getLevelType(defaultState);
+    this.view = this.getLevelType(makeState());
 
     this.view.onAnswer = (answer) => this.onAnswer(answer);
   }
 
-  init(game = defaultState) {
+  init(game = makeState) {
     this.model.update(game);
     this.model.setTimer();
 
@@ -73,9 +73,7 @@ export default class GameScreen {
 
   changeLevel() {
     this.view = this.getLevelType(this.model.game);
-
     this.model.timer.start();
-
     this.view.onAnswer = (answer) => this.onAnswer(answer);
 
     setScreen(this.view);
