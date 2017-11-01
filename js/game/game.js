@@ -9,7 +9,7 @@ import {levels, makeState, Result} from '../data/data';
 export default class GameScreen {
   constructor(data = levels) {
     this.model = new GameModel(data);
-    this.view = this.getLevelType(makeState());
+    // this.view = this.getLevelType(makeState());
   }
 
   init(game = makeState()) {
