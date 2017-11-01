@@ -14,7 +14,7 @@ export default class GameScreen {
     this.view.onAnswer = (answer) => this.onAnswer(answer);
   }
 
-  init(game = makeState) {
+  init(game = makeState()) {
     this.model.update(game);
     this.model.setTimer();
 
