@@ -1,11 +1,19 @@
 import WelcomeView from './welcome-view';
 import setScreen from '../../helpers/set-screen';
-import startGame from '../game';
+import App from '../../application';
 
-const welcome = new WelcomeView();
+class WelcomeScreen {
+  constructor() {
+    this.view = new WelcomeView();
+  }
 
-welcome.onClick = () => {
-  setScreen(startGame());
-};
+  init() {
+    setScreen(this.view);
 
-export default () => welcome;
+    this.view.onClick = () => {
+      App.startGame();
+    };
+  }
+}
+
+export default new WelcomeScreen();
