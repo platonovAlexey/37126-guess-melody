@@ -12,8 +12,8 @@ export default class GameModel {
     return this.game;
   }
 
-  setTimer() {
-    this.timer = getTimer(this.game.time, this.game);
+  setTimer(time) {
+    this.timer = getTimer(time, this.game);
     return this.timer;
   }
 
