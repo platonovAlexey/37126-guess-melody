@@ -9,13 +9,11 @@ import {levels, makeState, Result} from '../data/data';
 export default class GameScreen {
   constructor(data = levels) {
     this.model = new GameModel(data);
-    // this.view = this.getLevelType(makeState());
   }
 
   init(game = makeState()) {
     this.model.update(game);
     this.model.setTimer(game.time);
-
     this.model.timer.start();
     this.view = this.getLevelType(this.model.game);
     this.view.onAnswer = (answer) => this.onAnswer(answer);
@@ -60,10 +58,9 @@ export default class GameScreen {
       case Result.NEXT: {
         const startLevelTime = this.model.game.time;
         this.model.setGameTime();
-
         this.model.setStat(startLevelTime - this.model.getAnswerTime());
-
         this.model.nextLevel();
+
         App.changeLevel(this.model.game);
         break;
       }
