@@ -6,8 +6,6 @@ import preload from './preload';
 import adapter from './data/adapter';
 import loader from './loader';
 
-let audioArraySecond = audioArray.slice();
-
 const ControllerSTATE = {
   WELCOME: ``,
   GAME: `game`,
@@ -79,6 +77,6 @@ export default class Application {
 loader.load()
     .then(adapter)
     .then((gameData) => Application.init(gameData))
-    .then(() => audioArraySecond.map((item) => preload(item)))
+    .then(() => audioArray.map((item) => preload(item)))
     .then((songPromises) => Promise.all(songPromises))
     .catch(window.console.error);
