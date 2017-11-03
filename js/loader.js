@@ -1,7 +1,7 @@
-export default (src) => {
-  return new Promise((resolve) => {
-    const audio = new Audio();
-    audio.playit = () => resolve(audio);
-    audio.src = src;
-  });
-};
+import {SERVER_URL} from './data/data';
+
+export default class Loader {
+  static load() {
+    return fetch(`${SERVER_URL}`).then((response) => response.json());
+  }
+}

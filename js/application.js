@@ -2,9 +2,11 @@ import welcomeScreen from './game/screen-welcome/welcome';
 import {defaultState, audioArray} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
-import loader from './loader';
+import preload from './preload';
 import adapter from './data/adapter';
-import Loader from './loaded';
+import loader from './loader';
+
+let audioArraySecond = audioArray.slice();
 
 const ControllerSTATE = {
   WELCOME: ``,
@@ -64,7 +66,6 @@ export default class Application {
   }
 
   static changeLevel(game = defaultState) {
-    // routes[ControllerSTATE.GAME] = new GameScreen();
     location.hash = `${ControllerSTATE.GAME}?${saveGame(game)}`;
   }
 
@@ -75,13 +76,9 @@ export default class Application {
   }
 }
 
-Loader.load()
+loader.load()
     .then(adapter)
     .then((gameData) => Application.init(gameData))
-    .then(() => audioArray.map((item) => loader(item)))
+    .then(() => audioArraySecond.map((item) => preload(item)))
     .then((songPromises) => Promise.all(songPromises))
-    .then(() => {
-      const playButton = document.querySelector(`.main-play`);
-      playButton.disabled = false;
-    })
     .catch(window.console.error);
