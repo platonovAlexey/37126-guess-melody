@@ -4,14 +4,14 @@ import LevelGenreView from './levels/level-gender-view';
 import GameModel from './game-model';
 import setScreen from '../helpers/set-screen';
 import gameOver from './game-over/game-over';
-import {levels, makeState, Result} from '../data/data';
+import {levels, defaultState, Result} from '../data/data';
 
 export default class GameScreen {
   constructor(data = levels) {
     this.model = new GameModel(data);
   }
 
-  init(game = makeState()) {
+  init(game = defaultState) {
     this.model.update(game);
     this.model.setTimer(game.time);
     this.model.timer.start();

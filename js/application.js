@@ -1,5 +1,5 @@
 import welcomeScreen from './game/screen-welcome/welcome';
-import {makeState} from './data/data';
+import {defaultState} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
 
@@ -22,7 +22,7 @@ const loadGame = (data) => {
   try {
     return JSON.parse(data);
   } catch (e) {
-    return makeState();
+    return defaultState;
   }
 };
 
@@ -60,7 +60,7 @@ export default class Application {
     location.hash = ControllerSTATE.WELCOME;
   }
 
-  static changeLevel(game = makeState()) {
+  static changeLevel(game = defaultState) {
     routes[ControllerSTATE.GAME] = new GameScreen();
     location.hash = `${ControllerSTATE.GAME}?${saveGame(game)}`;
   }
