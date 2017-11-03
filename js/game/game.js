@@ -4,10 +4,10 @@ import LevelGenreView from './levels/level-gender-view';
 import GameModel from './game-model';
 import setScreen from '../helpers/set-screen';
 import gameOver from './game-over/game-over';
-import {levels, defaultState, Result} from '../data/data';
+import {defaultState, Result} from '../data/data';
 
 export default class GameScreen {
-  constructor(data = levels) {
+  constructor(data) {
     this.model = new GameModel(data);
   }
 
@@ -23,10 +23,10 @@ export default class GameScreen {
   }
 
   getLevelType(game) {
-    let level = new LevelGenreView(game, game.level);
+    let level = new LevelGenreView(game, game.level, this.model);
 
-    if (levels[`state-` + game.level].type === `artist`) {
-      level = new LevelArtistView(game, game.level);
+    if (this.model.data[`state-` + game.level].type === `artist`) {
+      level = new LevelArtistView(game, game.level, this.model);
     }
 
     return level;

@@ -261,6 +261,10 @@ export const stats = [];
 
 export const statistics = [1, 2, 3];
 
+export const audioArray = [];
+
+export const SERVER_URL = `https://es.dump.academy/guess-melody/questions`;
+
 export const setNextLevel = (game) => {
   game = Object.assign({}, game);
   game.level += 1;
