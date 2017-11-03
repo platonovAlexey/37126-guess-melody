@@ -1,4 +1,4 @@
-import {levels, setLives, setTime, setNextLevel} from '../data/data';
+import {levels, setLives, setTime, setNextLevel, stats} from '../data/data';
 import countPoints from '../result/count-points';
 import getTimer from '../helpers/get-timer';
 
@@ -12,8 +12,8 @@ export default class GameModel {
     return this.game;
   }
 
-  setTimer() {
-    this.timer = getTimer(this.game.time, this.game);
+  setTimer(time) {
+    this.timer = getTimer(time, this.game);
     return this.timer;
   }
 
@@ -27,7 +27,7 @@ export default class GameModel {
   }
 
   setStat(answer) {
-    this.game.statsArray.push(answer);
+    stats.push(answer);
   }
 
   die() {
@@ -39,6 +39,6 @@ export default class GameModel {
   }
 
   getGamePoints() {
-    this.game.score = countPoints(this.game.statsArray, this.game.lives);
+    this.game.score = countPoints(stats, this.game.lives);
   }
 }

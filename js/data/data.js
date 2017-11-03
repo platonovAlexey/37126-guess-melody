@@ -257,6 +257,8 @@ export const levels = {
   },
 };
 
+export const stats = [];
+
 export const statistics = [1, 2, 3];
 
 export const setNextLevel = (game) => {

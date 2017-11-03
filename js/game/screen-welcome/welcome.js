@@ -11,7 +11,7 @@ class WelcomeScreen {
     setScreen(this.view);
 
     this.view.onClick = () => {
-      App.startGame();
+      App.changeLevel();
     };
   }
 }

@@ -1,6 +1,7 @@
 import ResultScreenView from './result-screen-view';
 import setScreen from '../../helpers/set-screen';
 import App from '../../application';
+import {stats} from '../../data/data';
 
 class ResultScreen {
   constructor(game) {
@@ -10,7 +11,7 @@ class ResultScreen {
 
   init() {
     this.view.onRepeat = () => {
-      this.game.statsArray.length = 0;
+      stats.length = 0;
       App.showWelcome();
     };
 

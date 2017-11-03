@@ -1,7 +1,7 @@
 import AbstractView from '../../screens/abstractView';
 import TimerView from '../module-timer/timer-view';
 import countPoints from '../../result/count-points';
-import {levels, getLevel, setNextLevel, Result} from '../../data/data';
+import {levels, getLevel, setNextLevel, Result, stats} from '../../data/data';
 
 const answerNode = (answers) => `${[...answers].map((answer) => `<div class="genre-answer">
           <div class="player-wrapper">
@@ -114,7 +114,7 @@ export default class LevelGenreView extends AbstractView {
         } else {
           let result = Result.DIE;
           if (this.game.lives <= 0 || this.game.time <= 0) {
-            this.game.score = countPoints(this.game.statsArray, this.game.lives);
+            this.game.score = countPoints(stats, this.game.lives);
             result = Result.FAIL;
           }
           this.onAnswer(result);
