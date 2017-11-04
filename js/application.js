@@ -1,10 +1,10 @@
 import welcomeScreen from './game/screen-welcome/welcome';
-import {defaultState, audioArray} from './data/data';
+import {defaultState, audioArray, stats} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
-import preload from './preload';
-import adapter from './data/adapter';
-import loader from './loader';
+import preload from './helpers/preload';
+import adapter from './helpers/adapter';
+import loader from './helpers/loader';
 
 const ControllerSTATE = {
   WELCOME: ``,
@@ -60,6 +60,7 @@ export default class Application {
   }
 
   static showWelcome() {
+    loadData();
     location.hash = ControllerSTATE.WELCOME;
   }
 
@@ -68,15 +69,22 @@ export default class Application {
   }
 
   static gameOver(game) {
+    if (game.score >= 0 && game.time > 0 && stats.length === 10) {
+      loader.saveResult({answers: stats, lives: game.lives});
+    }
     Application.routes[ControllerSTATE.SCORE] = new ResultScreen(game);
     Application.routes[ControllerSTATE.SCORE].init();
     location.hash = `${ControllerSTATE.SCORE}?${saveGame(game)}`;
   }
 }
 
-loader.load()
-    .then(adapter)
-    .then((gameData) => Application.init(gameData))
-    .then(() => audioArray.map((item) => preload(item)))
-    .then((songPromises) => Promise.all(songPromises))
-    .catch(window.console.error);
+const loadData = () => {
+  loader.load()
+      .then(adapter)
+      .then((gameData) => Application.init(gameData))
+      .then(() => audioArray.map((item) => preload(item)))
+      .then((songPromises) => Promise.all(songPromises))
+      .catch(window.console.error);
+};
+
+loadData();

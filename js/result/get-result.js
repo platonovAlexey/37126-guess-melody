@@ -1,9 +1,10 @@
-import {MAX_LIVES, FailResultText} from '../data/data';
+import {MAX_LIVES, FailResultText, getDeclension} from '../data/data';
 import getTime from '../helpers/get-time';
 
 const getResult = (statistics, currentResult) => {
   statistics = statistics.slice();
   const result = Object.assign({}, currentResult);
+  const fails = MAX_LIVES - result.lives;
   let resultText = ``;
   let placeInStats = 0;
   let percent = 0;
@@ -43,14 +44,18 @@ const getResult = (statistics, currentResult) => {
     if (result.time <= 0) {
       resultText = FailResultText.TIME_FAIL;
     } else {
-      const minutes = getTime(currentResult.time, `min`);
-      const seconds = getTime(currentResult.time, `sec`);
+      const minutes = getTime(result.time, `min`);
+      const seconds = getTime(result.time, `sec`);
+      const minutesWord = getDeclension(minutes, `минуту`, `минуты`, `минут`);
+      const secondsWord = getDeclension(seconds, `секунду`, `секунды`, `секунд`);
+      const scoreWord = getDeclension(result.score, `балл`, `балла`, `баллов`);
+      const failsWord = getDeclension(fails, `ошибку`, `ошибки`, `ошибок`);
 
       resultText = {
         title: `Вы настоящий меломан!`,
-        stat: `За ${minutes} минуты и ${seconds} секунд
-      <br>вы набрали ${result.score} баллов
-      <br>совершив ${MAX_LIVES - result.lives} ошибки`,
+        stat: `За ${minutes} ${minutesWord} минуты и ${seconds} ${secondsWord}
+      <br>вы набрали ${result.score} ${scoreWord}
+      <br>совершив ${fails} ${failsWord}`,
         comparison: `Вы заняли ${place}-${placeTextEnd}е место из ${statistics.length} игрок${playersTextEnd}. Это лучше чем у ${percent}% игроков`,
         button: `Сыграть ещё раз`
       };

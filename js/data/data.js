@@ -1,6 +1,10 @@
 export const GAME_TIME = 300;
 export const MAX_LIVES = 3;
-export const TIME_ANSWER = 30;
+export const DEFAULT_USER = `id37126`;
+export const stats = [];
+export const statistics = [1, 2, 3];
+export const audioArray = [];
+export const SERVER_URL = `https://es.dump.academy/guess-melody`;
 
 export const defaultState = Object.freeze({
   lives: 3,
@@ -257,14 +261,6 @@ export const levels = {
   },
 };
 
-export const stats = [];
-
-export const statistics = [1, 2, 3];
-
-export const audioArray = [];
-
-export const SERVER_URL = `https://es.dump.academy/guess-melody/questions`;
-
 export const setNextLevel = (game) => {
   game = Object.assign({}, game);
   game.level += 1;
@@ -286,15 +282,30 @@ export const setTime = (game, time) => {
   return game;
 };
 
-export const getLevel = (game) => {
-  return levels[`state-` + game.level] || false;
+export const getLevel = (game, data) => {
+  return data[`state-` + game.level] || false;
 };
 
-export const makeState = () => {
-  let state = Object.assign({}, defaultState);
-  state.statsArray = [];
-
-  return state;
+export const getDeclension = (num, nominative, genitiveSingular, genitivePlural) => {
+  let wordDecline;
+  if (num > 10 && (Math.round((num % 100) / 10)) === 1) {
+    return genitivePlural;
+  } else {
+    switch (num % 10) {
+      case 1:
+        wordDecline = nominative;
+        break;
+      case 2:
+      case 3:
+      case 4:
+        wordDecline = genitiveSingular;
+        break;
+      default:
+        wordDecline = genitivePlural;
+        break;
+    }
+  }
+  return wordDecline;
 };
 
 export const FailResultText = {

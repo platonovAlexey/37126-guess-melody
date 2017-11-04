@@ -1,5 +1,5 @@
-import AbstractView from '../../screens/abstractView';
-import logo from '../../screens/common/logo';
+import AbstractView from '../../abstractView';
+import logo from '../../helpers/common/logo';
 
 export default class WelcomeView extends AbstractView {
 

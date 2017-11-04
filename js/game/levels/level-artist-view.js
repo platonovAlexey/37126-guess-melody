@@ -1,4 +1,4 @@
-import AbstractView from '../../screens/abstractView';
+import AbstractView from '../../abstractView';
 import TimerView from '../module-timer/timer-view';
 import countPoints from '../../result/count-points';
 import {getLevel, setNextLevel, Result, stats} from '../../data/data';
@@ -79,7 +79,7 @@ export default class LevelArtistView extends AbstractView {
         e.preventDefault();
         if (item.checked) {
           if (i === rightAnswerIndex) {
-            this.onAnswer(getLevel(setNextLevel(this.game)) ? Result.NEXT : Result.WIN);
+            this.onAnswer(getLevel(setNextLevel(this.game), this.model.data) ? Result.NEXT : Result.WIN);
           } else {
             let result = Result.DIE;
             if (this.game.lives <= 0 || this.game.time <= 0) {
