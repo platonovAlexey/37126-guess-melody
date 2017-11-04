@@ -1,7 +1,7 @@
-import AbstractView from '../../screens/abstractView';
+import AbstractView from '../../abstractView';
 import getResult from '../../result/get-result';
 import {statistics} from '../../data/data';
-import logo from '../../screens/common/logo';
+import logo from '../../helpers/common/logo';
 
 export default class ResultScreenView extends AbstractView {
   constructor(game) {

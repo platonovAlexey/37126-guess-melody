@@ -1,4 +1,4 @@
-import {SERVER_URL, DEFAULT_USER} from './data/data';
+import {SERVER_URL, DEFAULT_USER} from '../data/data';
 
 export default class Loader {
   static load() {

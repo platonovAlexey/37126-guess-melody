@@ -3,7 +3,7 @@ import setScreen from '../../helpers/set-screen';
 import App from '../../application';
 import {stats, statistics} from '../../data/data';
 import countPoints from '../../result/count-points';
-import loader from '../../loader';
+import loader from '../../helpers/loader';
 
 class ResultScreen {
   constructor(game) {
