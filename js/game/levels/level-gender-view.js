@@ -1,7 +1,7 @@
 import AbstractView from '../../screens/abstractView';
 import TimerView from '../module-timer/timer-view';
 import countPoints from '../../result/count-points';
-import {levels, getLevel, setNextLevel, Result, stats} from '../../data/data';
+import {getLevel, setNextLevel, Result, stats} from '../../data/data';
 
 const answerNode = (answers) => `${[...answers].map((answer) => `<div class="genre-answer">
           <div class="player-wrapper">
@@ -18,21 +18,24 @@ const answerNode = (answers) => `${[...answers].map((answer) => `<div class="gen
         </div>`).join(``)}`;
 
 export default class LevelGenreView extends AbstractView {
-  constructor(game, level) {
+  constructor(game, level, model) {
     super();
     this.level = level;
     this.game = game;
+    this.model = model;
   }
 
   get template() {
     const header = new TimerView(this.game);
     return `<section class="main main--level main--level-genre">
+
     ${header.template}
 
     <div class="main-wrap">
-      <h2 class="title">${levels[`state-` + this.level].question}</h2>
+      <h2 class="title">${this.model.data[`state-` + this.level].question}</h2>
       <form class="genre">
-        ${answerNode(levels[`state-` + this.level].answers)}
+      
+        ${answerNode(this.model.data[`state-` + this.level].answers)}
 
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>
@@ -74,7 +77,7 @@ export default class LevelGenreView extends AbstractView {
     const answersContainer = this.element.querySelector(`.genre`);
 
     sendButton.disabled = true;
-    const rightAnswer = levels[`state-` + this.level].genre;
+    const rightAnswer = this.model.data[`state-` + this.level].genre;
     let countRightAnswers = 0;
     let arr = [];
 

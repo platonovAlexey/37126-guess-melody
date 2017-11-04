@@ -1,18 +1,15 @@
 import welcomeScreen from './game/screen-welcome/welcome';
-import {defaultState} from './data/data';
+import {defaultState, audioArray} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
+import preload from './preload';
+import adapter from './data/adapter';
+import loader from './loader';
 
 const ControllerSTATE = {
   WELCOME: ``,
   GAME: `game`,
   SCORE: `score`
-};
-
-const routes = {
-  [ControllerSTATE.WELCOME]: welcomeScreen,
-  [ControllerSTATE.GAME]: ``,
-  [ControllerSTATE.SCORE]: ``
 };
 
 const loadGame = (data) => {
@@ -39,7 +36,13 @@ const saveGame = (game) => {
 };
 
 export default class Application {
-  static init() {
+  static init(gameData) {
+    Application.routes = {
+      [ControllerSTATE.WELCOME]: welcomeScreen,
+      [ControllerSTATE.GAME]: new GameScreen(gameData),
+      [ControllerSTATE.SCORE]: ``
+    };
+
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
       const [id, data] = hashValue.split(`?`);
@@ -50,7 +53,7 @@ export default class Application {
   }
 
   static changeHash(id, data) {
-    const controller = routes[id];
+    const controller = Application.routes[id];
     if (controller) {
       controller.init(loadGame(data));
     }
@@ -61,14 +64,19 @@ export default class Application {
   }
 
   static changeLevel(game = defaultState) {
-    routes[ControllerSTATE.GAME] = new GameScreen();
     location.hash = `${ControllerSTATE.GAME}?${saveGame(game)}`;
   }
 
   static gameOver(game) {
-    routes[ControllerSTATE.SCORE] = new ResultScreen(game);
+    Application.routes[ControllerSTATE.SCORE] = new ResultScreen(game);
+    Application.routes[ControllerSTATE.SCORE].init();
     location.hash = `${ControllerSTATE.SCORE}?${saveGame(game)}`;
   }
 }
 
-Application.init();
+loader.load()
+    .then(adapter)
+    .then((gameData) => Application.init(gameData))
+    .then(() => audioArray.map((item) => preload(item)))
+    .then((songPromises) => Promise.all(songPromises))
+    .catch(window.console.error);
