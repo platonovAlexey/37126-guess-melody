@@ -6,6 +6,7 @@ const numberAnswers = 10;
 const countPoints = (answersArray, lives) => {
   const answers = answersArray.slice();
   let score = 0;
+
   if (answers.length === numberAnswers) {
     for (let i = 0; i < answers.length; i++) {
       score += (answers[i] <= allTime) ? 2 : 1;
