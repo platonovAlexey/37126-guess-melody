@@ -1,4 +1,4 @@
-import AbstractView from '../../screens/abstractView';
+import AbstractView from '../../abstract-view';
 import TimerView from '../module-timer/timer-view';
 import countPoints from '../../result/count-points';
 import {getLevel, setNextLevel, Result, stats} from '../../data/data';
