@@ -1,12 +1,12 @@
 import welcomeScreen from './game/screen-welcome/welcome';
-import {defaultState, audioArray, stats} from './data/data';
+import {defaultState, stats} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
 import preload from './helpers/preload';
 import adapter from './helpers/adapter';
 import loader from './helpers/loader';
 
-const ControllerSTATE = {
+const ControllerState = {
   WELCOME: ``,
   GAME: `game`,
   SCORE: `score`
@@ -38,9 +38,9 @@ const saveGame = (game) => {
 export default class Application {
   static init(gameData) {
     Application.routes = {
-      [ControllerSTATE.WELCOME]: welcomeScreen,
-      [ControllerSTATE.GAME]: new GameScreen(gameData),
-      [ControllerSTATE.SCORE]: ``
+      [ControllerState.WELCOME]: welcomeScreen,
+      [ControllerState.GAME]: new GameScreen(gameData),
+      [ControllerState.SCORE]: ``
     };
 
     const hashChangeHandler = () => {
@@ -48,7 +48,7 @@ export default class Application {
       const [id, data] = hashValue.split(`?`);
       this.changeHash(id, data);
     };
-    window.onhashchange = hashChangeHandler;
+    window.addEventListener(`hashchange`, hashChangeHandler);
     hashChangeHandler();
   }
 
@@ -61,28 +61,31 @@ export default class Application {
 
   static showWelcome() {
     loadData();
-    location.hash = ControllerSTATE.WELCOME;
+    location.hash = ControllerState.WELCOME;
   }
 
   static changeLevel(game = defaultState) {
-    location.hash = `${ControllerSTATE.GAME}?${saveGame(game)}`;
+    location.hash = `${ControllerState.GAME}?${saveGame(game)}`;
   }
 
   static gameOver(game) {
     if (game.score >= 0 && game.time > 0 && stats.length === 10) {
       loader.saveResult({answers: stats, lives: game.lives});
     }
-    Application.routes[ControllerSTATE.SCORE] = new ResultScreen(game);
-    Application.routes[ControllerSTATE.SCORE].init();
-    location.hash = `${ControllerSTATE.SCORE}?${saveGame(game)}`;
+    Application.routes[ControllerState.SCORE] = new ResultScreen(game);
+    Application.routes[ControllerState.SCORE].init();
+    location.hash = `${ControllerState.SCORE}?${saveGame(game)}`;
   }
 }
 
 const loadData = () => {
   loader.load()
       .then(adapter)
-      .then((gameData) => Application.init(gameData))
-      .then(() => audioArray.map((item) => preload(item)))
+      .then((gameData) => {
+        Application.init(gameData.data);
+        return gameData.audio;
+      })
+      .then((audioArray) => audioArray.map((item) => preload(item)))
       .then((songPromises) => Promise.all(songPromises))
       .catch(window.console.error);
 };

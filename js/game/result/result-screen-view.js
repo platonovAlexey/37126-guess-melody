@@ -1,4 +1,4 @@
-import AbstractView from '../../abstractView';
+import AbstractView from '../../abstract-view';
 import getResult from '../../result/get-result';
 import {statistics} from '../../data/data';
 import logo from '../../helpers/common/logo';

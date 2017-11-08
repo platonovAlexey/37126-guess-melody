@@ -1,8 +1,8 @@
-import {SERVER_URL, DEFAULT_USER} from '../data/data';
+import {SERVER_URL, DEFAULT_USER} from './data/data';
 
 export default class Loader {
   static load() {
-    return fetch(`${SERVER_URL}/questions`).then((response) => response.json());
+    return fetch(`${SERVER_URL}`).then((response) => response.json());
   }
 
   static loadResult(userName = DEFAULT_USER) {

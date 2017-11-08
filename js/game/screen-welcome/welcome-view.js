@@ -1,4 +1,4 @@
-import AbstractView from '../../abstractView';
+import AbstractView from '../../abstract-view';
 import logo from '../../helpers/common/logo';
 
 export default class WelcomeView extends AbstractView {

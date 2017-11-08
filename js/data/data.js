@@ -2,8 +2,7 @@ export const GAME_TIME = 300;
 export const MAX_LIVES = 3;
 export const DEFAULT_USER = `id37126`;
 export const stats = [];
-export const statistics = [1, 2, 3];
-export const audioArray = [];
+export const statistics = [];
 export const SERVER_URL = `https://es.dump.academy/guess-melody`;
 
 export const defaultState = Object.freeze({
@@ -283,7 +282,7 @@ export const setTime = (game, time) => {
 };
 
 export const getLevel = (game, data) => {
-  return data[`state-` + game.level] || false;
+  return data[`state-${game.level}`] || false;
 };
 
 export const getDeclension = (num, nominative, genitiveSingular, genitivePlural) => {
@@ -326,4 +325,11 @@ export const Result = {
   WIN: 1,
   NEXT: 2,
   DIE: 3
+};
+
+export const AnswersScore = {
+  ANSWER_FAST: 2,
+  ANSWER_SLOW: 1,
+  ANSWER_FAIL: -1,
+  ANSWER_DIE: 2
 };

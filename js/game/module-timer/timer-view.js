@@ -1,4 +1,4 @@
-import AbstractView from '../../abstractView';
+import AbstractView from '../../abstract-view';
 import {MAX_LIVES} from '../../data/data';
 import getTime from '../../helpers/get-time';
 
