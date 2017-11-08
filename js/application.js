@@ -2,9 +2,9 @@ import welcomeScreen from './game/screen-welcome/welcome';
 import {defaultState, audioArray, stats} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
-import preload from './preload';
-import adapter from './data/adapter';
-import loader from './loader';
+import preload from './helpers/preload';
+import adapter from './helpers/adapter';
+import loader from './helpers/loader';
 
 const ControllerSTATE = {
   WELCOME: ``,

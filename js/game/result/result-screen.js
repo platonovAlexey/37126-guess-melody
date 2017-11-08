@@ -3,7 +3,7 @@ import setScreen from '../../helpers/set-screen';
 import App from '../../application';
 import {stats, statistics} from '../../data/data';
 import countPoints from '../../result/count-points';
-import loader from '../../loader';
+import loader from '../../helpers/loader';
 
 class ResultScreen {
   constructor(game) {
@@ -12,7 +12,7 @@ class ResultScreen {
   }
 
   init() {
-    if (this.game.points >= 0 && this.game.time > 0 && stats.length === 10) {
+    if (this.game.score >= 0 && this.game.time > 0 && stats.length === 10) {
       loader.loadResult().then((score) => {
         for (const userStats of score) {
           if (!Array.isArray(userStats)) {

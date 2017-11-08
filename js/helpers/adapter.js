@@ -1,4 +1,4 @@
-import {audioArray} from './data';
+import {audioArray} from '../data/data';
 
 const generateAnswersArray = (answers, type) => {
   const answerArray = [];
