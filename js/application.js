@@ -1,12 +1,12 @@
 import welcomeScreen from './game/screen-welcome/welcome';
-import {defaultState, audioArray, stats} from './data/data';
+import {defaultState, stats} from './data/data';
 import GameScreen from './game/game';
 import ResultScreen from './game/result/result-screen';
 import preload from './helpers/preload';
 import adapter from './helpers/adapter';
 import loader from './helpers/loader';
 
-const ControllerState= {
+const ControllerState = {
   WELCOME: ``,
   GAME: `game`,
   SCORE: `score`
@@ -48,7 +48,7 @@ export default class Application {
       const [id, data] = hashValue.split(`?`);
       this.changeHash(id, data);
     };
-    window.onhashchange = hashChangeHandler;
+    window.addEventListener(`hashchange`, hashChangeHandler);
     hashChangeHandler();
   }
 
@@ -81,8 +81,11 @@ export default class Application {
 const loadData = () => {
   loader.load()
       .then(adapter)
-      .then((gameData) => Application.init(gameData))
-      .then(() => audioArray.map((item) => preload(item)))
+      .then((gameData) => {
+        Application.init(gameData.data);
+        return gameData.audio;
+      })
+      .then((audioArray) => audioArray.map((item) => preload(item)))
       .then((songPromises) => Promise.all(songPromises))
       .catch(window.console.error);
 };

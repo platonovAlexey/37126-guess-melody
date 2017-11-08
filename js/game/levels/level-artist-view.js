@@ -27,10 +27,10 @@ export default class LevelArtistView extends AbstractView {
     ${header.template}
 
     <div class="main-wrap">
-      <h2 class="title main-title">${this.model.data[`state-` + this.level].question}</h2>
+      <h2 class="title main-title">${this.model.data[`state-${this.level}`].question}</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${this.model.data[`state-` + this.level].srcAudio}" autoplay></audio>
+          <audio src="${this.model.data[`state-${this.level}`].srcAudio}" autoplay></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>
@@ -38,7 +38,7 @@ export default class LevelArtistView extends AbstractView {
         </div>
       </div>
       <form class="main-list">
-       ${answerNode(this.model.data[`state-` + this.level].answers)}
+       ${answerNode(this.model.data[`state-${this.level}`].answers)}
       </form>
     </div>
   </section>`;
@@ -63,16 +63,9 @@ export default class LevelArtistView extends AbstractView {
     });
 
     const answerListRadioButtons = this.element.querySelectorAll(`.main-answer-r`);
-    const answers = this.model.data[`state-` + this.game.level].answers;
+    const answers = this.model.data[`state-${this.game.level}`].answers;
 
-    const rightAnswerIndex = answers.findIndex((elem, i) => {
-      if (!elem.isRight) {
-        return false;
-      }
-
-      return i;
-    });
-
+    const rightAnswerIndex = answers.findIndex((el) => el.isRight);
 
     [...answerListRadioButtons].forEach((item, i) => {
       item.addEventListener(`change`, (e) => {

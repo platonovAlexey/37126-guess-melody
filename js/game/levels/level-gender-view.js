@@ -3,7 +3,7 @@ import TimerView from '../module-timer/timer-view';
 import countPoints from '../../result/count-points';
 import {getLevel, setNextLevel, Result, stats} from '../../data/data';
 
-const answerNode = (answers) => `${[...answers].map((answer) => `<div class="genre-answer">
+const answerNode = (answers) => `${[...answers].map((answer, i) => `<div class="genre-answer">
           <div class="player-wrapper">
             <div class="player">
               <audio src="${answer.srcAudio}"></audio>
@@ -13,8 +13,8 @@ const answerNode = (answers) => `${[...answers].map((answer) => `<div class="gen
               </div>
             </div>
           </div>
-          <input type="checkbox" name="answer" value="${answer.genre}" id="${answer.genre}">
-          <label class="genre-answer-check" for="${answer.genre}"></label>
+          <input type="checkbox" name="answer" value="${answer.genre}" id="id-${i + 1}-${answer.genre}">
+          <label class="genre-answer-check" for="id-${i + 1}-${answer.genre}"></label>
         </div>`).join(``)}`;
 
 export default class LevelGenreView extends AbstractView {
@@ -32,10 +32,10 @@ export default class LevelGenreView extends AbstractView {
     ${header.template}
 
     <div class="main-wrap">
-      <h2 class="title">${this.model.data[`state-` + this.level].question}</h2>
+      <h2 class="title">${this.model.data[`state-${this.level}`].question}</h2>
       <form class="genre">
       
-        ${answerNode(this.model.data[`state-` + this.level].answers)}
+        ${answerNode(this.model.data[`state-${this.level}`].answers)}
 
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>

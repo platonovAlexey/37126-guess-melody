@@ -4,6 +4,12 @@ export default class Loader {
   static load() {
     return fetch(`${SERVER_URL}/questions`).then((response) => response.json());
   }
+  // static loadData() {
+  //   return fetch(`${SERVER_URL}/questions`).
+  //       then((res) => {
+  //         return (res.ok) ? res.json() : Promise.reject();
+  //       });
+  // }
 
   static loadResult(userName = DEFAULT_USER) {
     return fetch(`${SERVER_URL}/stats/${userName}`).then((response) => response.json());

@@ -25,7 +25,7 @@ export default class GameScreen {
   getLevelType(game) {
     let level = new LevelGenreView(game, game.level, this.model);
 
-    if (this.model.data[`state-` + game.level].type === `artist`) {
+    if (this.model.data[`state-${game.level}`].type === `artist`) {
       level = new LevelArtistView(game, game.level, this.model);
     }
 
